@@ -335,6 +335,98 @@ function Services() {
               </div>
             </div>
           </section>
+
+          {/* Case Study Section */}
+          <section className="mt-24">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-heading font-bold text-gray-900 mb-6">Success Story: Teka Ram Tequila</h2>
+              <p className="text-lg text-gray-600 font-body max-w-3xl mx-auto">
+                See how we transformed a vision into a premium artisanal tequila brand with a distinctive character and cultural authenticity.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="relative">
+                <div className="aspect-w-3 aspect-h-4 rounded-2xl overflow-hidden shadow-2xl">
+                  <img
+                    src="/case-study.jpeg"
+                    alt="Teka Ram Tequila Bottle"
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+                <div className="absolute -bottom-6 -right-6 bg-white rounded-full p-4 shadow-lg">
+                  <div className="bg-gradient-to-br from-brand-blue to-brand-indigo rounded-full p-2">
+                    <span className="text-white text-xl">🏆</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-2xl font-heading font-bold text-gray-900 mb-3">The Challenge</h3>
+                    <p className="text-gray-600 font-body">
+                      Create a premium tequila brand that celebrates Mexican culture while standing out in the competitive spirits market with an unforgettable mascot and identity.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-heading font-bold text-gray-900 mb-3">Our Approach</h3>
+                    <div className="space-y-4">
+                      <div className="flex items-start space-x-3">
+                        <div className="w-6 h-6 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <span className="text-white text-sm">✓</span>
+                        </div>
+                        <div>
+                          <h4 className="font-heading font-bold text-gray-900">Character Development</h4>
+                          <p className="text-gray-600 font-body">Created Teka Ram, a charismatic mascot embodying strength and tradition</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <div className="w-6 h-6 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <span className="text-white text-sm">✓</span>
+                        </div>
+                        <div>
+                          <h4 className="font-heading font-bold text-gray-900">Authentic Design</h4>
+                          <p className="text-gray-600 font-body">Developed a label featuring traditional agave motifs and modern artistry</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <div className="w-6 h-6 bg-brand-blue rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <span className="text-white text-sm">✓</span>
+                        </div>
+                        <div>
+                          <h4 className="font-heading font-bold text-gray-900">Premium Positioning</h4>
+                          <p className="text-gray-600 font-body">Crafted a brand story emphasizing artisanal quality and cultural heritage</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-heading font-bold text-gray-900 mb-3">The Results</h3>
+                    <p className="text-gray-600 font-body mb-4">
+                      Teka Ram Tequila launched successfully with widespread recognition for its distinctive branding and authentic character. The brand achieved:
+                    </p>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-gray-50 rounded-xl p-4 text-center">
+                        <div className="text-3xl font-bold text-brand-blue mb-1">85%</div>
+                        <div className="text-sm text-gray-600">Brand Recognition</div>
+                      </div>
+                      <div className="bg-gray-50 rounded-xl p-4 text-center">
+                        <div className="text-3xl font-bold text-brand-blue mb-1">2X</div>
+                        <div className="text-sm text-gray-600">Market Growth</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Link to="/brand-consultation" className="btn-primary inline-block">
+                    Start Your Success Story
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
 
         {/* Process Timeline */}
