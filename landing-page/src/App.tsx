@@ -55,7 +55,7 @@ function App() {
     try {
       // Use deployed API URL - replace with your actual Vercel backend URL
       const apiUrl = import.meta.env.PROD 
-        ? 'https://your-backend-project.vercel.app/api/contact'
+        ? 'https://waddleandsip-8f9a.vercel.app/api/contact'
         : 'http://localhost:3001/api/contact'
       
       const response = await fetch(apiUrl, {
