@@ -491,7 +491,7 @@ function Services() {
               <ul className="text-left space-y-3 mb-8">
                 <li className="flex items-center space-x-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-gray-600 font-body">Basic mascot design</span>
+                  <span className="text-gray-600 font-body">Use your current PFP</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <span className="text-green-500">✓</span>
