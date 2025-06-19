@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function App() {
   const [formData, setFormData] = useState({
@@ -115,7 +116,7 @@ function App() {
               <a href="#home" className="font-body text-gray-700 hover:text-brand-blue transition-colors">Home</a>
               <a href="#icepop" className="font-body text-gray-700 hover:text-brand-blue transition-colors">Meet Icepop</a>
               <a href="#features" className="font-body text-gray-700 hover:text-brand-blue transition-colors">Features</a>
-              <a href="#about" className="font-body text-gray-700 hover:text-brand-blue transition-colors">About</a>
+              <a href="#services" className="font-body text-gray-700 hover:text-brand-blue transition-colors">Services</a>
               <a href="#contact" className="font-body text-gray-700 hover:text-brand-blue transition-colors">Contact</a>
               <button className="btn-primary">
                 Shop Now
@@ -254,6 +255,104 @@ function App() {
               <h3 className="text-xl font-heading font-bold text-brand-blue mb-4">Favorites</h3>
               <p className="text-gray-600 font-body">
                 Hot cocoa on cold days, cozy blankets by the fire, and of course, Waddle and Sip's signature drinks!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Brand Development Services Section */}
+      <section id="services" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="section-title mb-4">Create Your Own Brand</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto font-body">
+              Ready to bring your beverage vision to life? We help entrepreneurs and brands create their own zero-proof or alcoholic beverages with custom mascots, just like Icepop!
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div>
+              <h3 className="text-3xl font-heading font-bold text-gray-900 mb-6">
+                From Concept to Launch
+              </h3>
+              <p className="text-lg text-gray-600 font-body mb-6">
+                We've mastered the art of creating memorable beverage brands with lovable mascots. Now we're sharing our expertise to help you build your own success story.
+              </p>
+              <p className="text-lg text-gray-600 font-body mb-8">
+                Whether you're dreaming of a zero-proof empire or crafting the next big alcoholic beverage, our team will guide you through every step of the journey.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link 
+                  to="/brand-consultation" 
+                  className="btn-primary text-center"
+                >
+                  Start Your Brand Journey
+                </Link>
+                <Link to="/services" className="btn-secondary text-center">
+                  Learn More
+                </Link>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="bg-gradient-to-br from-brand-blue to-brand-indigo rounded-3xl p-8 text-white">
+                <div className="text-center">
+                  <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span className="text-3xl">🐧</span>
+                  </div>
+                  <h4 className="text-2xl font-heading font-bold mb-4">Your Mascot Awaits</h4>
+                  <p className="font-body mb-6">
+                    Every great brand needs a memorable character. We'll help you create a mascot that captures your brand's personality and connects with your audience.
+                  </p>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="text-center">
+                      <div className="font-bold">Personality</div>
+                      <div className="opacity-80">Development</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-bold">Visual</div>
+                      <div className="opacity-80">Design</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-bold">Brand</div>
+                      <div className="opacity-80">Story</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="font-bold">Marketing</div>
+                      <div className="opacity-80">Strategy</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="card group">
+              <div className="w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-indigo rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform">
+                <span className="text-2xl">🎨</span>
+              </div>
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">Brand Identity</h3>
+              <p className="text-gray-600 font-body">
+                Complete brand development including mascot design, logo creation, color palette, and visual identity system.
+              </p>
+            </div>
+            <div className="card group">
+              <div className="w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-indigo rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform">
+                <span className="text-2xl">🍹</span>
+              </div>
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">Product Development</h3>
+              <p className="text-gray-600 font-body">
+                Recipe formulation, flavor development, packaging design, and production guidance for your beverage.
+              </p>
+            </div>
+            <div className="card group">
+              <div className="w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-indigo rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform">
+                <span className="text-2xl">🚀</span>
+              </div>
+              <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">Launch Strategy</h3>
+              <p className="text-gray-600 font-body">
+                Marketing strategy, distribution planning, launch events, and ongoing support to ensure your success.
               </p>
             </div>
           </div>
