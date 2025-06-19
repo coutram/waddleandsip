@@ -53,16 +53,20 @@ function App() {
     })
 
     try {
-      // Simulate API call - replace with your actual endpoint
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // Use deployed API URL - replace with your actual Vercel backend URL
+      const apiUrl = import.meta.env.PROD 
+        ? 'https://your-backend-project.vercel.app/api/contact'
+        : 'http://localhost:3001/api/contact'
       
-      // For demo purposes, we'll just simulate success
-      // In a real app, you would send this to your backend:
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData)
-      // })
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send message')
+      }
 
       setFormStatus({
         isSubmitting: false,
