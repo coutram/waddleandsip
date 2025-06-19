@@ -1,24 +1,119 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function App() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+  const [formStatus, setFormStatus] = useState<{
+    isSubmitting: boolean
+    isSubmitted: boolean
+    error: string | null
+  }>({
+    isSubmitting: false,
+    isSubmitted: false,
+    error: null
+  })
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Basic validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setFormStatus({
+        isSubmitting: false,
+        isSubmitted: false,
+        error: 'Please fill in all fields'
+      })
+      return
+    }
+
+    if (!formData.email.includes('@')) {
+      setFormStatus({
+        isSubmitting: false,
+        isSubmitted: false,
+        error: 'Please enter a valid email address'
+      })
+      return
+    }
+
+    setFormStatus({
+      isSubmitting: true,
+      isSubmitted: false,
+      error: null
+    })
+
+    try {
+      // Simulate API call - replace with your actual endpoint
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // For demo purposes, we'll just simulate success
+      // In a real app, you would send this to your backend:
+      // const response = await fetch('/api/contact', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData)
+      // })
+
+      setFormStatus({
+        isSubmitting: false,
+        isSubmitted: true,
+        error: null
+      })
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        message: ''
+      })
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setFormStatus(prev => ({
+          ...prev,
+          isSubmitted: false
+        }))
+      }, 5000)
+
+    } catch {
+      setFormStatus({
+        isSubmitting: false,
+        isSubmitted: false,
+        error: 'Something went wrong. Please try again.'
+      })
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-brand-ice to-white">
       {/* Navigation */}
-      <nav className="bg-white shadow-lg">
+      <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
+          <div className="flex justify-between h-20">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <h1 className="text-2xl font-bold text-indigo-600">Waddle and Sip</h1>
+                <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-brand-blue to-brand-indigo bg-clip-text text-transparent">
+                  Waddle and Sip
+                </h1>
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#home" className="text-gray-700 hover:text-indigo-600 transition-colors">Home</a>
-              <a href="#icepop" className="text-gray-700 hover:text-indigo-600 transition-colors">Meet Icepop</a>
-              <a href="#features" className="text-gray-700 hover:text-indigo-600 transition-colors">Features</a>
-              <a href="#about" className="text-gray-700 hover:text-indigo-600 transition-colors">About</a>
-              <a href="#contact" className="text-gray-700 hover:text-indigo-600 transition-colors">Contact</a>
-              <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+              <a href="#home" className="font-body text-gray-700 hover:text-brand-blue transition-colors">Home</a>
+              <a href="#icepop" className="font-body text-gray-700 hover:text-brand-blue transition-colors">Meet Icepop</a>
+              <a href="#features" className="font-body text-gray-700 hover:text-brand-blue transition-colors">Features</a>
+              <a href="#about" className="font-body text-gray-700 hover:text-brand-blue transition-colors">About</a>
+              <a href="#contact" className="font-body text-gray-700 hover:text-brand-blue transition-colors">Contact</a>
+              <button className="btn-primary">
                 Shop Now
               </button>
             </div>
@@ -27,95 +122,62 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-100 via-white to-blue-200">
-        {/* Snowflake SVG background */}
-        <div className="absolute inset-0 pointer-events-none select-none opacity-30 z-0">
-          <svg width="100%" height="100%" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="snow" width="80" height="80" patternUnits="userSpaceOnUse">
-                <text x="0" y="60" fontSize="60" fill="#c7d2fe">❄️</text>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#snow)" />
-          </svg>
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
-          {/* Left: Text */}
-          <div className="flex-1 text-center md:text-left">
-            <h1 className="text-5xl md:text-7xl font-heading font-bold text-indigo-700 mb-6 leading-tight drop-shadow-lg">
-              Chill Responsibly<br />
-              <span className="text-blue-400">with Icepop</span>
-            </h1>
-            <p className="text-xl font-body text-gray-700 mb-8 max-w-xl mx-auto md:mx-0">
-              Designer zero proof drinks for every adventure. Hand-crafted, full of flavor, and always fun—just like our mascot!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <button className="bg-indigo-600 text-white px-8 py-3 rounded-full text-lg font-bold font-heading shadow-lg hover:bg-indigo-700 transition-colors">
-                Shop Now
-              </button>
-              <button className="bg-white border-2 border-indigo-400 text-indigo-700 px-8 py-3 rounded-full text-lg font-bold font-heading shadow hover:bg-indigo-50 transition-colors">
-                Meet Icepop
-              </button>
-            </div>
-          </div>
-          {/* Right: Mascot and Label */}
-          <div className="flex-1 flex flex-col items-center gap-6">
-            <img
-              src="/label.png"
-              alt="Waddle and Sip - Icepop's Iced Espresso Martini Label"
-              className="w-64 h-80 object-contain rounded-3xl shadow-2xl border-4 border-blue-200 bg-blue-50 mb-4"
-            />
-            <div className="w-32 h-32 bg-blue-200 rounded-full flex items-center justify-center shadow-lg border-4 border-white -mt-12 overflow-hidden">
-              <img
-                src="/icepop.png"
-                alt="Icepop the Penguin Mascot"
-                className="w-full h-full object-cover"
-              />
-            </div>
+      <section id="home" className="relative pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Animated Snowflake Background */}
+        <div className="absolute inset-0 pointer-events-none select-none opacity-20">
+          <div className="absolute w-full h-full animate-float">
+            <svg width="100%" height="100%" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="snow" width="50" height="50" patternUnits="userSpaceOnUse">
+                  <path d="M25,0 L30,20 L40,25 L30,30 L25,50 L20,30 L10,25 L20,20 Z" fill="#c7d2fe" opacity="0.5"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#snow)" />
+            </svg>
           </div>
         </div>
-      </section>
 
-      {/* Label/Bottle Visual Section */}
-      <section className="py-12 bg-white">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8 px-4">
-          <div className="flex-1 flex justify-center">
-            {/* Actual label image */}
-            <img
-              src="/label.png"
-              alt="Waddle and Sip - Icepop's Iced Espresso Martini Label"
-              className="w-64 h-80 object-contain rounded-lg shadow-inner border border-indigo-100 bg-blue-50"
-            />
-          </div>
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Icepop's Iced Espresso Martini</h2>
-            <p className="text-lg text-gray-700 mb-2">Zero Proof – Ready to Drink</p>
-            <p className="text-gray-600 mb-2">750 mL | 100% Taste | Aroha Flavor</p>
-            <p className="text-gray-600 mb-2">Hand Crafted | Limited Edition</p>
-            <p className="text-indigo-600 font-semibold mt-4">Chill Responsibly</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Icepop's Story Section */}
-      <section id="icepop" className="py-20 bg-gradient-to-r from-blue-100 to-indigo-50">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <div className="flex flex-col items-center mb-8">
-            {/* Icepop mascot illustration */}
-            <div className="w-32 h-32 bg-blue-200 rounded-full flex items-center justify-center mb-4 shadow-lg overflow-hidden">
-              <img
-                src="/icepop.png"
-                alt="Icepop the Penguin Mascot"
-                className="w-full h-full object-cover"
-              />
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left: Text Content */}
+            <div className="text-center md:text-left">
+              <h1 className="font-heading text-6xl md:text-7xl font-bold mb-6">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-indigo">
+                  Chill Responsibly
+                </span>
+                <br />
+                <span className="text-blue-400">with Icepop</span>
+              </h1>
+              <p className="text-xl font-body text-gray-700 mb-8 max-w-xl mx-auto md:mx-0">
+                Designer zero proof drinks for every adventure. Hand-crafted, full of flavor, and always fun—just like our mascot!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <button className="btn-primary">
+                  Shop Now
+                </button>
+                <button className="btn-secondary">
+                  Meet Icepop
+                </button>
+              </div>
             </div>
-            <h2 className="text-4xl font-bold text-indigo-700 mb-2">Meet Icepop</h2>
-            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              Icepop is a spirited and adventurous penguin from the frosty landscapes of Antarctica. Born on December 8, he thrives in the winter wonderland he calls home. When he's not out exploring or discovering new things, Icepop loves cozying up inside a furry blanket by a warm fire, sipping on his favorite treat—hot cocoa.
-            </p>
-          </div>
-          <div className="text-gray-700 text-lg max-w-2xl mx-auto">
-            With his bright eyes and carefree spirit, Icepop lights up every room (or iceberg!) he waddles into. Known for his kind heart and contagious smile, he always brings joy to everyone around him. Icepop's playful side shines through in his love for games, especially his favorite—hide and seek. Whether he's darting through snowy tunnels or sliding down icy slopes, Icepop's enthusiasm for fun and friendship makes him the life of any gathering.
+
+            {/* Right: Product Display */}
+            <div className="relative">
+              <div className="relative w-full aspect-square">
+                <img
+                  src="/bottle.jpeg"
+                  alt="Waddle and Sip Bottle"
+                  className="absolute inset-0 w-full h-full object-contain rounded-3xl transform rotate-12 animate-float"
+                />
+                <div className="absolute -bottom-8 right-0 w-32 h-32">
+                  <img
+                    src="/icepop.png"
+                    alt="Icepop the Penguin"
+                    className="w-full h-full object-contain animate-bounce-slow"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -124,72 +186,71 @@ function App() {
       <section id="features" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose Waddle and Sip?</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <h2 className="section-title mb-4">Why Choose Waddle and Sip?</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-body">
               Designer zero-proof beverages, crafted for those who crave adventure, flavor, and fun—without compromise.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">❄️</span>
+            {[
+              {
+                icon: "❄️",
+                title: "Zero Proof, Full Flavor",
+                description: "Enjoy the taste and experience of a crafted cocktail—without the alcohol."
+              },
+              {
+                icon: "🎨",
+                title: "Designer Quality",
+                description: "Hand-crafted, limited edition drinks with unique flavors and beautiful packaging."
+              },
+              {
+                icon: "🐧",
+                title: "Inspired by Icepop",
+                description: "Our mascot's playful, adventurous spirit is infused into every bottle and every gathering."
+              }
+            ].map((feature, index) => (
+              <div key={index} className="card group">
+                <div className="w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-indigo rounded-full flex items-center justify-center mx-auto mb-4 transform group-hover:scale-110 transition-transform">
+                  <span className="text-2xl">{feature.icon}</span>
+                </div>
+                <h3 className="text-xl font-heading font-bold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600 font-body">{feature.description}</p>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Zero Proof, Full Flavor</h3>
-              <p className="text-gray-600">Enjoy the taste and experience of a crafted cocktail—without the alcohol.</p>
-            </div>
-            <div className="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎨</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Designer Quality</h3>
-              <p className="text-gray-600">Hand-crafted, limited edition drinks with unique flavors and beautiful packaging.</p>
-            </div>
-            <div className="text-center p-6 rounded-lg hover:shadow-lg transition-shadow">
-              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🐧</span>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Inspired by Icepop</h3>
-              <p className="text-gray-600">Our mascot's playful, adventurous spirit is infused into every bottle and every gathering.</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">About Waddle and Sip</h2>
-              <p className="text-lg text-gray-600 mb-6">
-                Waddle and Sip is a designer zero proof brand, dedicated to creating hand-crafted, alcohol-free beverages that are as stylish as they are delicious. Our mission is to bring people together for fun, friendship, and unforgettable moments—no alcohol required.
-              </p>
-              <p className="text-lg text-gray-600 mb-8">
-                Inspired by our mascot Icepop, we believe in living life to the fullest, embracing adventure, and always chilling responsibly.
-              </p>
-              <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors">
-                Learn More About Us
-              </button>
+      {/* Meet Icepop Section */}
+      <section id="icepop" className="py-20 bg-gradient-to-r from-brand-ice to-white">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <div className="mb-12">
+            <div className="w-48 h-48 mx-auto relative mb-8">
+              <div className="absolute inset-0 bg-gradient-to-br from-brand-blue to-brand-indigo rounded-full opacity-20 animate-pulse"></div>
+              <img
+                src="/icepop.png"
+                alt="Icepop the Penguin"
+                className="w-full h-full object-contain relative z-10 animate-float"
+              />
             </div>
-            <div className="bg-white p-8 rounded-lg shadow-lg">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-indigo-600 mb-2">Zero</div>
-                  <div className="text-gray-600">Proof</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-indigo-600 mb-2">100%</div>
-                  <div className="text-gray-600">Taste</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-indigo-600 mb-2">Limited</div>
-                  <div className="text-gray-600">Edition</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-indigo-600 mb-2">Hand</div>
-                  <div className="text-gray-600">Crafted</div>
-                </div>
-              </div>
+            <h2 className="section-title mb-6">Meet Icepop</h2>
+            <p className="text-lg text-gray-700 font-body max-w-2xl mx-auto leading-relaxed">
+              Born in the frosty landscapes of Antarctica, Icepop is our adventurous mascot who loves nothing more than bringing joy to everyone around him. With his signature blue cap and warm smile, he's the perfect companion for all your zero-proof adventures.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="card">
+              <h3 className="text-xl font-heading font-bold text-brand-blue mb-4">Personality</h3>
+              <p className="text-gray-600 font-body">
+                Playful, adventurous, and always ready for fun. Icepop loves hide and seek, sliding down icy slopes, and making new friends wherever he goes.
+              </p>
+            </div>
+            <div className="card">
+              <h3 className="text-xl font-heading font-bold text-brand-blue mb-4">Favorites</h3>
+              <p className="text-gray-600 font-body">
+                Hot cocoa on cold days, cozy blankets by the fire, and of course, Waddle and Sip's signature drinks!
+              </p>
             </div>
           </div>
         </div>
@@ -197,98 +258,100 @@ function App() {
 
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-          <p className="text-xl text-gray-600 mb-12">
-            Want to learn more or carry Waddle and Sip? Reach out and let's connect!
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="section-title mb-8">Get in Touch</h2>
+          <p className="text-xl text-gray-600 mb-12 font-body">
+            Have questions about our products or want to collaborate? We'd love to hear from you!
           </p>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gray-50 p-8 rounded-lg">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Contact Information</h3>
-              <div className="space-y-4 text-left">
-                <div className="flex items-center">
-                  <span className="w-6 h-6 text-indigo-600 mr-3">📧</span>
-                  <span className="text-gray-600">hello@waddleandsip.com</span>
+          <div className="card max-w-lg mx-auto">
+            {formStatus.isSubmitted ? (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">✅</span>
                 </div>
-                <div className="flex items-center">
-                  <span className="w-6 h-6 text-indigo-600 mr-3">📞</span>
-                  <span className="text-gray-600">+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="w-6 h-6 text-indigo-600 mr-3">📍</span>
-                  <span className="text-gray-600">123 Innovation St, Tech City, TC 12345</span>
-                </div>
+                <h3 className="text-xl font-heading font-bold text-green-600 mb-2">Message Sent!</h3>
+                <p className="text-gray-600 font-body">
+                  Thank you for reaching out! We'll get back to you soon.
+                </p>
               </div>
-            </div>
-            <div className="bg-gray-50 p-8 rounded-lg">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Send us a Message</h3>
-              <form className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                />
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                />
-                <textarea
-                  placeholder="Your Message"
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                ></textarea>
-                <button
-                  type="submit"
-                  className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Your name"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all font-body"
+                    disabled={formStatus.isSubmitting}
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Your email"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all font-body"
+                    disabled={formStatus.isSubmitting}
+                  />
+                </div>
+                <div>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Your message"
+                    rows={4}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-blue focus:border-transparent outline-none transition-all font-body"
+                    disabled={formStatus.isSubmitting}
+                  ></textarea>
+                </div>
+                
+                {formStatus.error && (
+                  <div className="text-red-600 text-sm font-body bg-red-50 p-3 rounded-lg">
+                    {formStatus.error}
+                  </div>
+                )}
+                
+                <button 
+                  type="submit" 
+                  className={`w-full px-8 py-3 rounded-full text-lg font-bold font-heading transition-all duration-200 ${
+                    formStatus.isSubmitting 
+                      ? 'bg-gray-400 cursor-not-allowed' 
+                      : 'btn-primary'
+                  }`}
+                  disabled={formStatus.isSubmitting}
                 >
-                  Send Message
+                  {formStatus.isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : (
+                    'Send Message'
+                  )}
                 </button>
               </form>
-            </div>
+            )}
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-2xl font-bold text-indigo-400 mb-4">Waddle and Sip</h3>
-              <p className="text-gray-400">
-                Designer zero proof. Hand crafted. Inspired by Icepop.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#home" className="hover:text-white transition-colors">Home</a></li>
-                <li><a href="#icepop" className="hover:text-white transition-colors">Meet Icepop</a></li>
-                <li><a href="#features" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#about" className="hover:text-white transition-colors">About</a></li>
-                <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Signature Drink</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>Icepop's Iced Espresso Hartini</li>
-                <li>Zero Proof</li>
-                <li>Limited Edition</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
-              <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">🐧</a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">❄️</a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">🎨</a>
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Waddle and Sip. All rights reserved.</p>
+      <footer className="bg-gray-50 py-12">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h3 className="font-heading font-bold text-2xl text-brand-blue mb-4">Waddle and Sip</h3>
+          <p className="text-gray-600 font-body mb-6">Chill Responsibly™</p>
+          <div className="flex justify-center space-x-6">
+            <a href="#" className="text-gray-600 hover:text-brand-blue transition-colors">Instagram</a>
+            <a href="#" className="text-gray-600 hover:text-brand-blue transition-colors">Twitter</a>
+            <a href="#" className="text-gray-600 hover:text-brand-blue transition-colors">Facebook</a>
           </div>
         </div>
       </footer>

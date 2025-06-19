@@ -1,0 +1,22 @@
+{
+  "name": "waddle-and-sip-server",
+  "version": "1.0.0",
+  "description": "Backend server for Waddle and Sip contact form",
+  "main": "server-example.js",
+  "scripts": {
+    "start": "node server-example.js",
+    "dev": "nodemon server-example.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "nodemailer": "^6.9.7",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["contact-form", "email", "waddle-and-sip"],
+  "author": "Waddle and Sip Team",
+  "license": "MIT"
+} 
